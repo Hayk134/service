@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoodService — Премиальный ремонт смартфонов и гаджетов | Ростов-на-Дону</title>
+  <meta name="description" content="Сервисный центр GoodService в Ростове-на-Дону, ул. Ерёменко, 97/29: честный ремонт телефонов, ноутбуков и планшетов. Стоимость и срок согласуем до ремонта.">
+
+  <!-- Google Fonts for Typography & Customizer -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Orbitron:wght@600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/site-system.css">
+</head>
+<body>
+
+  <!-- Multi-Layer Scroll Background & Studio Lighting -->
+  <div class="scroll-bg-container" id="scrollBgContainer">
+    <!-- Real Workshop Photos with Crossfade & Parallax (Inactive by default, can be enabled in Customizer) -->
+    <div class="bg-photo-layer" id="bgPhotoHero" style="background-image: url('assets/images/facade.webp');" data-section="hero"></div>
+    <div class="bg-photo-layer" id="bgPhotoCalc" style="background-image: url('assets/images/repair.webp');" data-section="calculator"></div>
+    <div class="bg-photo-layer" id="bgPhotoPromos" style="background-image: url('assets/images/master.webp');" data-section="promos"></div>
+    <div class="bg-photo-layer" id="bgPhotoLocation" style="background-image: url('assets/images/interior.webp');" data-section="location"></div>
+    <div class="bg-photo-layer" id="bgPhotoReviews" style="background-image: url('assets/images/facade.webp');" data-section="reviews"></div>
+
+    <!-- Luxury Dark Gradient Tint for readable typography -->
+    <div class="bg-photo-tint"></div>
+
+    <!-- Full-Width Horizontal Studio Light Beam (100vw) -->
+    <div class="ambient-spotlight" id="ambientSpotlight"></div>
+    <div class="ambient-pedestal-line"></div>
+  </div>
+
+  <!-- Main Page Stage Wrapper -->
+  <div class="site-page-wrapper" id="sitePageWrapper">
+
+    <!-- ==========================================================================
+         FLOATING ISLAND HEADER (Clean Navigation Bar)
+         ========================================================================== -->
+    <header class="site-header">
+      <div class="header-main-bar">
+        <!-- Desktop Navigation Links -->
+        <nav class="header-nav">
+          <a href="#calculator">Калькулятор цен</a>
+          <a href="#promos">Как мы работаем</a>
+          <a href="#location">Где нас найти</a>
+          <a href="#reviews">Отзывы</a>
+        </nav>
+
+        <!-- Header Actions: Phone & Booking CTA -->
+        <div class="header-actions">
+          <a href="tel:+79613010222" class="btn-pill btn-pill-secondary header-phone-btn" title="Позвонить мастеру">
+            <span class="phone-number">+7 (961) 301-02-22</span>
+          </a>
+
+          <button class="btn-pill btn-pill-primary header-booking-btn" onclick="openDirectChat('Хочу записаться на ремонт')">
+            Записаться
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Bar -->
+      <nav class="header-mobile-nav" aria-label="Быстрая навигация">
+        <div class="header-mobile-pills">
+          <a href="#calculator" class="mobile-nav-pill">
+            <span>Расчёт</span>
+          </a>
+          <a href="#promos" class="mobile-nav-pill">
+            <span>Ремонт</span>
+          </a>
+          <a href="#location" class="mobile-nav-pill">
+            <span>Где мы</span>
+          </a>
+          <a href="#reviews" class="mobile-nav-pill">
+            <span>Отзывы</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+  <!-- ==========================================================================
+       HERO: BRAND HEADER
+       ========================================================================== -->
+  <section class="hero-stage" id="hero"><div class="hero-intro"><div class="hero-copy"><p class="hero-eyebrow">СЕРВИСНЫЙ ЦЕНТР / РОСТОВ-НА-ДОНУ</p><h1>Ремонт техники <span>с понятными условиями</span></h1><p class="hero-description">Телефоны, ноутбуки и гаджеты. Уточним стоимость и срок до начала ремонта.</p><div class="hero-actions"><a class="btn-pill btn-pill-primary" href="#calculator">Узнать стоимость</a><a class="hero-address" href="#location">Ерёменко, 97/29 <span>↗</span></a></div></div><div class="hero-image" aria-label="Мастерская GoodService"><div class="hero-flip-card"><div class="hero-flip-face hero-flip-front"><div class="hero-image-caption">GOOD<span>SERVICE</span><small>Ремонт техники в Левенцовке</small></div></div><div class="hero-flip-face hero-flip-back"><img src="assets/images/logo-emblem.svg" alt="Логотип GoodService"><div>Good<span>Service</span></div></div></div></div></div></section>
+
+  <!-- ==========================================================================
+       SECTION 1: 4-STEP CALCULATOR (Тип -> Бренд -> Модель -> Услуга -> Telegram)
+       ========================================================================== -->
+  <section class="calc-section" id="calculator">
+    <div class="container">
+      <div class="calc-island">
+        
+        <div class="calc-head-row">
+          <div><p class="section-kicker">РАССЧИТАТЬ СТОИМОСТЬ</p><h2 class="calc-section-title">Что случилось с устройством?</h2><p class="calc-intro">Выберите модель и неисправность. Мастер уточнит цену и срок.</p></div>
+        </div>
+
+        <!-- Unified Instant Search Engine (Умный поисковик по тексту и регистру) -->
+        <div class="calc-search-engine-wrap">
+          <div class="calc-search-box">
+            <span class="calc-search-icon"><img src="assets/icons/apple-search.png" alt="" class="apple-emoji-inline"></span>
+            <input type="text" 
+                   id="calcGlobalSearchInput" 
+                   class="calc-global-search-input" 
+                   value="" 
+                   placeholder="Например, iPhone 13 или Samsung A52" aria-label="Модель устройства" 
+                   autocomplete="off" 
+                   spellcheck="false">
+            <button type="button" class="calc-search-clear-btn" id="calcSearchClearBtn" onclick="clearGlobalSearch()" title="Очистить поиск" aria-label="Очистить поиск" style="display: none;">✕</button>
+          </div>
+
+          <!-- Instant Live Suggestions Dropdown (appears dynamically as user types) -->
+          <div class="calc-search-live-dropdown" id="calcLiveDropdown" style="display: none;"></div>
+
+        </div>
+
+        <!-- Вид неисправности (Единственный пункт выбора ремонта) -->
+        <div class="calc-malfunction-section" id="calcMalfunctionSection">
+          <div class="calc-malfunction-header">
+            <h3 class="malfunction-main-title">Выберите неисправность</h3>
+          </div>
+
+          <div class="services-picker-grid" id="calcServicesGrid"></div>
+
+          <!-- Пункт: Опишите проблему -->
+          <div class="custom-problem-card" id="customProblemCard">
+            <div class="custom-problem-title">Опишите проблему</div>
+            <div class="custom-problem-input-wrap">
+              <input type="text" 
+                     id="customProblemInput" 
+                     class="custom-problem-input" 
+                     placeholder="Опишите проблему своими словами..." 
+                     oninput="handleCustomProblemInput(this.value)"
+                     aria-label="Опишите проблему" onfocus="selectCustomProblem()">
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-result-box" aria-live="polite"><div class="calc-summary-text"><span class="result-label">ВАШ РАСЧЁТ</span><span class="summary-device-line" id="resDeviceLine">Устройство не указано</span><span class="summary-service-line" id="resServiceLine">Выберите модель и неисправность</span></div><div class="result-price-wrap"><span class="result-price-label">Ориентировочная стоимость работы</span><span class="summary-price-num" id="resPriceNum">Уточните у мастера</span></div><p class="result-note">Указана стоимость работы без детали. Цена запчасти зависит от качества. Итоговую стоимость и срок мастер согласует до ремонта.</p><div class="calc-messenger-actions"><a href="https://t.me/good_service161" target="_blank" rel="noopener noreferrer" class="btn-pill btn-pill-primary messenger-text-btn" id="btnDirectTelegram"><img src="assets/icons/telegram_logo.png" alt=""> Уточнить в Telegram</a><a href="https://max.ru/u/f9LHodD0cOLmx9khVkXjQy_EYaKk7mGxK-8x_1GXfViMjwrmJvpe3ZB1IVQ" target="_blank" rel="noopener noreferrer" class="btn-pill btn-pill-secondary messenger-text-btn" id="btnDirectMaxi"><img src="assets/icons/max_logo.png" alt=""> Написать в MAX</a></div><p class="messenger-hint">Откроется чат. Отправьте сообщение, чтобы мастер ответил. <span id="priceUpdated"></span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 2: PROMOTIONS & DISCOUNTS (Скидки и Акции)
+       ========================================================================== -->
+  <section class="promos-section" id="promos"><div class="container"><div class="section-headline-center"><p class="section-kicker">ПРОСТО И ПОНЯТНО</p><h2 class="section-title-large">Как проходит ремонт</h2></div><div class="promos-grid process-grid"><div class="promo-glass-card"><span class="process-number">01</span><h3 class="promo-card-title">Расскажите о проблеме</h3><p class="promo-card-desc">Выберите устройство и напишите мастеру. Стоимость диагностики уточним отдельно.</p></div><div class="promo-glass-card"><span class="process-number">02</span><h3 class="promo-card-title">Согласуем детали</h3><p class="promo-card-desc">Детали заказываем под ваш ремонт. Обсудим качество, стоимость и срок поставки.</p></div><div class="promo-glass-card"><span class="process-number">03</span><h3 class="promo-card-title">Выполним ремонт</h3><p class="promo-card-desc">После согласования стоимости и срока приступим к работе. Ускоренный заказ детали можно обсудить за дополнительную плату.</p></div></div></div></section>
+
+  <!-- ==========================================================================
+       SECTION 3: MAP & WHERE TO FIND US (Карта, где нас найти)
+       ========================================================================== -->
+  <section class="location-section" id="location">
+    <div class="container">
+      <div class="section-headline-center">
+        <span class="section-badge-pill">УДОБНОЕ РАСПОЛОЖЕНИЕ</span>
+        <h2 class="section-title-large">Где нас найти</h2>
+      </div>
+
+      <div class="location-glass-box">
+        <div class="location-info-side">
+          <h3 class="location-point-title">GoodService на Ерёменко</h3>
+          <div class="location-details-list">
+            <div class="loc-item">
+              <img src="assets/icons/apple-pin.png" alt="Адрес" class="loc-apple-emoji" width="26" height="26">
+              <div class="loc-item-text">
+                <div class="loc-item-title">г. Ростов-на-Дону, ул. Ерёменко, 97/29</div>
+                <div class="loc-item-subtitle">мкр. Левенцовский (вход рядом с Invitro)</div>
+              </div>
+            </div>
+            <div class="loc-item">
+              <img src="assets/icons/apple-clock.png" alt="График работы" class="loc-apple-emoji" width="26" height="26">
+              <div class="loc-item-text">
+                <div class="loc-item-title">График работы:</div>
+                <div class="loc-schedule-table">
+                  <div class="loc-schedule-row">
+                    <span class="loc-schedule-days">Пн — Пт:</span>
+                    <span class="loc-schedule-time">10:00 – 19:00</span>
+                  </div>
+                  <div class="loc-schedule-row">
+                    <span class="loc-schedule-days">Сб — Вс:</span>
+                    <span class="loc-schedule-time">10:00 – 18:00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="location-route-link" href="https://yandex.ru/maps/org/gudservis/182772286323/" target="_blank" rel="noopener noreferrer">Открыть в Яндекс Картах ↗</a>
+        </div>
+
+        <div class="location-map-side">
+          <!-- Yandex Organization Official Map Widget -->
+          <iframe src="https://yandex.ru/map-widget/v1/org/gudservis/182772286323/?ll=39.599103%2C47.232811&amp;z=16.7" title="GoodService на Яндекс Картах" loading="lazy" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 4: REVIEWS (Отзывы клиентов)
+       ========================================================================== -->
+  <section class="reviews-section" id="reviews">
+    <div class="container">
+      <div class="section-headline-center">
+        <h2 class="section-title-large">Отзывы наших клиентов</h2>
+        <div class="reviews-yandex-badge-wrap">
+          <a href="https://yandex.ru/maps/org/gudservis/182772286323/reviews/" target="_blank" rel="noopener noreferrer" class="reviews-yandex-btn">
+            <span class="reviews-yandex-star">★ Отзывы</span>
+            <span class="reviews-yandex-text">Смотреть все отзывы на Яндекс Картах</span>
+            <span class="reviews-yandex-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <p class="reviews-swipe-hint">Листайте отзывы в сторону</p>
+      <div class="reviews-grid" id="reviewsSlider" tabindex="0" aria-label="Отзывы клиентов, можно листать в сторону">
+        <!-- Review 1 -->
+        <div class="review-glass-card">
+          <div>
+            <div class="review-card-header">
+              <div class="review-stars-row">★★★★★</div>
+              <span class="review-verified-badge"><img src="assets/icons/check.svg" alt="" class="apple-emoji-inline"> Яндекс Карты</span>
+            </div>
+            <p class="review-text-quote">
+              «Срочно потребовался второй телефон для работы, был старенький Айфон XR с битым дисплеем. Обратился в сервисный центр Good Service, быстро оценили степень повреждений, провели замену необходимых частей, телефон был готов сразу на следующий день! Скорость превосходная, прайс вкуснейший! Крутышки, ничего не скажешь. Сервис приятнейший! В общем остался доволен, однозначно рекомендую этих ребят!»
+            </p>
+          </div>
+          <div class="review-author-meta">
+            <div>
+              <div class="review-author-name">Максим Кёнинг</div>
+              <div class="review-device-tag">Ремонт iPhone XR</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-glass-card">
+          <div>
+            <div class="review-card-header">
+              <div class="review-stars-row">★★★★★</div>
+              <span class="review-verified-badge"><img src="assets/icons/check.svg" alt="" class="apple-emoji-inline"> Яндекс Карты</span>
+            </div>
+            <p class="review-text-quote">
+              «Остался доволен, поменяли экран на новый оригинал (16 Pro), в подарок наклеили защитную плёнку антишпион. Сделали в течение дня, как и договаривались. Алексей и Данил, Браво! Даже не видно ремонтировался телефон или нет.»
+            </p>
+          </div>
+          <div class="review-author-meta">
+            <div>
+              <div class="review-author-name">TeslaService116</div>
+              <div class="review-device-tag">Замена экрана iPhone 16 Pro</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-glass-card">
+          <div>
+            <div class="review-card-header">
+              <div class="review-stars-row">★★★★★</div>
+              <span class="review-verified-badge"><img src="assets/icons/check.svg" alt="" class="apple-emoji-inline"> Яндекс Карты</span>
+            </div>
+            <p class="review-text-quote">
+              «Обратилась в сервис‑центр с проблемой вздувшегося аккумулятора — сделали быстро и качественно. Отдельно приятно удивило, что при выдаче мастер бесплатно поставил защитную плёнку. Неожиданный и очень приятный бонус! Однозначно рекомендую.»
+            </p>
+          </div>
+          <div class="review-author-meta">
+            <div>
+              <div class="review-author-name">Татьяна Журбина</div>
+              <div class="review-device-tag">Замена вздувшегося АКБ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="review-glass-card">
+          <div>
+            <div class="review-card-header">
+              <div class="review-stars-row">★★★★★</div>
+              <span class="review-verified-badge"><img src="assets/icons/check.svg" alt="" class="apple-emoji-inline"> Яндекс Карты</span>
+            </div>
+            <p class="review-text-quote">
+              «Обращаюсь в этот сервис не в первый раз. Год назад отдавал им на ремонт биоса и чистку от мусора ноутбук Asus K56CB — уже год прошел, пашет отлично. Недавно пришел с планшетом Lenovo Legion: мастер управился буквально за полдня, постоянно был на связи. Отдельный респект за то, что за мелочь даже денег не взял!»
+            </p>
+          </div>
+          <div class="review-author-meta">
+            <div>
+              <div class="review-author-name">Plasertsel</div>
+              <div class="review-device-tag">Ремонт Asus &amp; Lenovo Legion</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 5 -->
+        <div class="review-glass-card">
+          <div>
+            <div class="review-card-header">
+              <div class="review-stars-row">★★★★★</div>
+              <span class="review-verified-badge"><img src="assets/icons/check.svg" alt="" class="apple-emoji-inline"> Яндекс Карты</span>
+            </div>
+            <p class="review-text-quote">
+              «Срочно понадобился ремонт телефона, так как в нём оставались все важные данные для работы. Обратилась в этот сервис рядом с домом, мастер честно всё объяснил. Ожидала день или два, но уже через час мне позвонили и сказали, что телефон готов! Безумно благодарна за такую оперативную и качественную работу!»
+            </p>
+          </div>
+          <div class="review-author-meta">
+            <div>
+              <div class="review-author-name">Альбина Романова</div>
+              <div class="review-device-tag">Срочный ремонт смартфона</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 6 -->
+        <div class="review-glass-card">
+          <div>
+            <div class="review-card-header">
+              <div class="review-stars-row">★★★★★</div>
+              <span class="review-verified-badge"><img src="assets/icons/check.svg" alt="" class="apple-emoji-inline"> Яндекс Карты</span>
+            </div>
+            <p class="review-text-quote">
+              «Установили новый оригинальный дисплей на айфон 11, работает отлично в подарок поставили гидрогелевую плёнку, дали гарантию. Сервис отличный, обращаюсь сюда не в первый раз, рекомендую, цена всегда приемлемая, всегда все расскажут подробно, спасибо!»
+            </p>
+          </div>
+          <div class="review-author-meta">
+            <div>
+              <div class="review-author-name">Дмитрий Сазонов</div>
+              <div class="review-device-tag">Замена дисплея iPhone 11</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 5: CORPORATE FOOTER (Подвал сайта)
+       ========================================================================== -->
+  <footer class="site-footer" id="footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <!-- Col 1: Brand -->
+        <div class="footer-brand-col">
+          <div class="footer-brand-header">
+            <img src="assets/images/logo-emblem.svg" alt="GoodService" class="footer-brand-logo">
+            <div class="footer-brand-name">Good<span>Service</span></div>
+          </div>
+          <p class="footer-brand-tagline">Сервисный центр по ремонту цифровой электроники в Ростове-на-Дону.</p>
+        </div>
+
+        <!-- Col 2: Contacts & Messengers -->
+        <div class="footer-col footer-contacts-col">
+          <h4 class="footer-col-title">Контакты</h4>
+          <div class="footer-contacts-info">
+            <div class="footer-contact-item">
+              <span class="f-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </span>
+              <span>г. Ростов-на-Дону, ул. Ерёменко, 97/29</span>
+            </div>
+            <div class="footer-contact-item">
+              <span class="f-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </span>
+              <a href="tel:+79613010222" class="footer-phone-link" title="Позвонить прямо сейчас">+7 (961) 301-02-22</a>
+            </div>
+            <div class="footer-contact-item">
+              <span class="f-icon"><img src="assets/icons/telegram_logo.png" alt="Telegram" class="messenger-inline-icon"></span>
+              <a href="https://t.me/good_service161" target="_blank" rel="noopener noreferrer" class="footer-link-accent">Telegram: @good_service161</a>
+            </div>
+            <div class="footer-contact-item">
+              <span class="f-icon"><img src="assets/icons/max_logo.png" alt="Maxi" class="messenger-inline-icon"></span>
+              <a href="https://max.ru/u/f9LHodD0cOLmx9khVkXjQy_EYaKk7mGxK-8x_1GXfViMjwrmJvpe3ZB1IVQ" target="_blank" rel="noopener noreferrer" class="footer-link-accent">Maxi: Чат GoodService</a>
+            </div>
+          </div>
+          <div class="footer-action-row">
+            <button class="btn-pill btn-pill-primary footer-cta-btn" onclick="openDirectChat('Хочу записаться на ремонт цифровой электроники')">
+              Написать мастеру в чат
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar: Standard Copyright Bar -->
+      <div class="footer-bottom-bar">
+        <div class="footer-bottom-copy">
+          © 2026 GoodService. Сервисный центр: г. Ростов-на-Дону, ул. Ерёменко, 97/29. Все права защищены.
+        </div>
+      </div>
+    </div>
+  </footer>
+  </div> <!-- /.site-page-wrapper -->
+
+  <div class="mobile-contact-bar"><a href="tel:+79613010222" class="mobile-call">Позвонить</a><a href="#calculator" class="mobile-estimate">Узнать стоимость</a></div>
+  <script src="js/xlsx.mini.min.js"></script>
+  <script src="js/sheet-prices.js"></script>
+  <script src="js/calculator-tg.js"></script>
+  <script src="js/scroll-background.js"></script>
+  <script src="js/hero-flip.js"></script>
+  <script src="js/scroll-reveal.js"></script>
+  <script>
+    // Enable touch & mouse drag swiping for Promos and Reviews
+    (function initSwipeableGrids() {
+      const sliders = document.querySelectorAll('.promos-grid, .reviews-grid');
+      sliders.forEach((slider) => {
+        let isDown = false;
+        let startX = 0;
+        let scrollLeft = 0;
+        let hasDragged = false;
+
+        slider.addEventListener('mousedown', (e) => {
+          if (e.target.closest('button, a, input, select')) return;
+          isDown = true;
+          hasDragged = false;
+          startX = e.pageX - slider.offsetLeft;
+          scrollLeft = slider.scrollLeft;
+          slider.style.scrollBehavior = 'auto';
+          slider.style.scrollSnapType = 'none';
+        });
+
+        const stopDrag = () => {
+          if (!isDown) return;
+          isDown = false;
+          slider.style.scrollBehavior = 'smooth';
+          slider.style.scrollSnapType = 'x mandatory';
+        };
+
+        slider.addEventListener('mouseleave', stopDrag);
+        slider.addEventListener('mouseup', stopDrag);
+
+        slider.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          const x = e.pageX - slider.offsetLeft;
+          const walk = (x - startX) * 1.25;
+          if (Math.abs(walk) > 4) {
+            hasDragged = true;
+            e.preventDefault();
+            slider.scrollLeft = scrollLeft - walk;
+          }
+        });
+
+        slider.addEventListener('click', (e) => {
+          if (hasDragged) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }, true);
+      });
+    })();
+  </script>
+</body>
+</html>
+
