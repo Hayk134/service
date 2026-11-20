@@ -14,11 +14,11 @@
     const seen = new Map();
     const priceIndex = new Map();
     const ambiguous = new Set();
-    function addModel(brand, model, aliases) {
+    function addModel(brand, model, aliases, kind) {
       if (!model || typeof model !== 'string') return null;
       const id = key(brand, model);
       if (seen.has(id)) return seen.get(id);
-      const item = { brand, model: model.trim(), aliases: String(aliases || '') };
+      const item = { brand, model: model.trim(), aliases: String(aliases || ''), kind };
       seen.set(id, item);
       models.push(item);
       return item;
@@ -45,7 +45,7 @@
         const name = typeof row[0] === 'string' ? row[0].trim() : '';
         if (!name) return;
         const brand = sheet === 'iPhone' ? 'Apple' : sheet === 'Другие бренды' ? name.split(/\s+/)[0] : sheet === 'Google Pixel' ? 'Google' : sheet;
-        const item = addModel(brand, name, row[1]);
+        const item = addModel(brand, name, row[1], 'phone');
         phoneIssues.forEach(issue => addPrice(item, issue, row[2], false));
       });
     });
@@ -57,7 +57,7 @@
         const name = typeof row[1] === 'string' ? row[1].trim() : '';
         if (!brand || !name) return;
         const model = name === 'Модели на странице не перечислены' ? 'Ноутбук' : name;
-        const item = addModel(brand, model, row[2]);
+        const item = addModel(brand, model, row[2], 'laptop');
         const screen = [amount(row[4]), amount(row[5])].filter(value => value !== null);
         addPrice(item, 'Разбит экран', screen.length ? Math.min(...screen) : null, true);
         addPrice(item, 'Быстро разряжается', row[6], true);
@@ -79,7 +79,7 @@
       'чистка после попадания влаги': 'Попадание влаги',
       'чистка после попадания жидкости': 'Попадание влаги'
     };
-    const aliases = { 'Планшеты': 'планшет', 'Умные часы': 'часы watch', 'Моноблоки': 'моноблок', 'Компьютеры': 'компьютер пк', 'Игровые приставки': 'приставка', 'Джойстики': 'джойстик геймпад', 'Беспроводные наушники': 'наушники', 'Портативные колонки': 'колонка', 'Роботы-пылесосы': 'робот пылесос' };
+    const aliases = { 'Планшеты': 'планшет', iPad: 'планшет apple', 'Умные часы': 'часы watch', 'Моноблоки': 'моноблок imac', 'Компьютеры': 'компьютер пк', 'Игровые приставки': 'приставка playstation ps xbox nintendo', 'Джойстики': 'джойстик геймпад', 'Беспроводные наушники': 'наушники airpods', 'Портативные колонки': 'колонка', 'Роботы-пылесосы': 'робот пылесос' };
     const categoryPrices = new Map();
     if (otherRows.length > 4 && norm(otherRows[3][0]) === norm('Категория устройства')) {
       otherRows.slice(4).forEach(row => {
@@ -87,7 +87,7 @@
         const issue = serviceIssues[norm(row[2])];
         const price = amount(row[3]);
         if (!category || !issue || price === null) return;
-        const item = addModel('', category, aliases[category] || '');
+        const item = addModel('', category, aliases[category] || '', 'other');
         const id = key('', category) + '|' + issue;
         const previous = categoryPrices.get(id);
         if (!previous || price < previous.price) categoryPrices.set(id, { item, issue, price });

@@ -1,12 +1,15 @@
-const MAX_URL = 'https://max.ru/u/f9LHodD0cOLmx9khVkXjQy_EYaKk7mGxK-8x_1GXfViMjwrmJvpe3ZB1IVQ';
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/18DT8BvQXQn9NQDQmUFHgQBaiyboaVxUS/export?format=xlsx';
 const issues = ['Разбит экран', 'Быстро разряжается', 'Не заряжается', 'Не включается', 'Проблема со звуком', 'Попадание влаги'];
-let models = [], prices = [], selectedModel = null, selectedIssue = '', customProblem = '';
+let models = [], selectedModel = null, selectedIssue = '', customProblem = '';
+let manualModel = false;
+let priceIndex = new Map();
+let catalogLoading = true;
 let pricesLoading = true;
 const $ = id => document.getElementById(id);
 const normalize = value => String(value || '').toLowerCase().replace(/ё/g, 'е').replace(/\+/g, ' plus ').replace(/[^a-zа-я0-9]+/g, ' ').trim();
-const transliterate = value => normalize(value).replace(/айфон/g, 'iphone').replace(/самсунг/g, 'samsung').replace(/сяоми/g, 'xiaomi').replace(/редми/g, 'redmi').replace(/поко/g, 'poco').replace(/хонор/g, 'honor').replace(/хуавей/g, 'huawei').replace(/реалми/g, 'realme');
 const deviceName = item => item.model.toLowerCase().startsWith(item.brand.toLowerCase()) ? item.model : `${item.brand} ${item.model}`;
+const modelKey = item => normalize(item.brand) + '|' + normalize(item.model);
+const catalogKey = item => modelSearchText(deviceName(item));
+const priceKey = (item, issue) => modelKey(item) + '|' + normalize(issue);
 
 function renderIssues() {
   const grid = $('calcServicesGrid');
@@ -23,7 +26,7 @@ function renderIssues() {
 }
 function getPriceRecord() {
   if (!selectedModel || !selectedIssue || customProblem) return null;
-  const row = prices.find(item => normalize(item.brand) === normalize(selectedModel.brand) && normalize(item.model) === normalize(selectedModel.model) && normalize(item.issue) === normalize(selectedIssue));
+  const row = priceIndex.get(priceKey(selectedModel, selectedIssue));
   return row && Number.isFinite(Number(row.price)) && Number(row.price) > 0 ? row : null;
 }
 function message(topic) {
@@ -42,60 +45,207 @@ function updateResult() {
   $('resDeviceLine').textContent = selectedModel ? deviceName(selectedModel) : input || 'Устройство не указано';
   $('resServiceLine').textContent = customProblem || selectedIssue || 'Выберите неисправность';
   const price = getPriceRecord();
-  $('resPriceNum').textContent = price ? (price.from ? 'от ' : '≈ ') + Number(price.price).toLocaleString('ru-RU') + ' ₽' : pricesLoading ? 'Загружаем цены…' : 'Уточните у мастера';
+  $('resPriceNum').textContent = price ? (price.from ? 'от ' : '≈ ') + Number(price.price).toLocaleString('ru-RU') + ' ₽' : pricesLoading && selectedModel && selectedIssue ? 'Загружаем цены…' : 'Уточните у мастера';
   const text = encodeURIComponent(message());
   $('btnDirectTelegram').href = 'https://t.me/good_service161?text=' + text;
-  $('btnDirectMaxi').href = MAX_URL + '?text=' + text;
 }
-function itemLength(item) { return item.model.length; }
+function acceptModel(item = null) {
+  selectedModel = item;
+  manualModel = !item;
+  if (item) $('calcGlobalSearchInput').value = deviceName(item);
+  $('calcLiveDropdown').hidden = true;
+  updateResult();
+  $('calcIssueTitle').focus({ preventScroll: true });
+}
+
 function renderSuggestions(value) {
   const dropdown = $('calcLiveDropdown');
   dropdown.replaceChildren();
-  const query = transliterate(value);
-  if (!query) { dropdown.style.display = 'none'; return; }
-  const terms = query.split(' ');
-  const matches = models.filter(item => { const haystack = transliterate(`${item.brand} ${item.model} ${item.aliases || ''}`); return terms.every(term => haystack.includes(term)); }).sort((a, b) => { const score = item => transliterate(item.model) === query || transliterate(deviceName(item)) === query ? 0 : transliterate(item.model).startsWith(query) ? 1 : 2; return score(a) - score(b) || itemLength(a) - itemLength(b); }).slice(0, 8);
+  if (!value.trim()) {
+    dropdown.hidden = true;
+    return;
+  }
+  const matches = findModels(value);
   if (!matches.length) {
-    const empty = document.createElement('div'); empty.className = 'calc-live-empty'; empty.textContent = 'Модель не найдена. Укажите её в поле и опишите проблему — мастер поможет.'; dropdown.appendChild(empty);
-  } else matches.forEach(item => {
-    const button = document.createElement('button'); button.type = 'button'; button.className = 'calc-live-result-item model-suggestion'; button.textContent = deviceName(item);
-    button.addEventListener('click', () => { selectedModel = item; $('calcGlobalSearchInput').value = deviceName(item); dropdown.style.display = 'none'; updateResult(); });
+    const empty = document.createElement('div');
+    empty.className = 'calc-live-empty';
+    empty.textContent = catalogLoading ? 'Загружаем список моделей…' : 'Модели нет в списке. Мастер уточнит стоимость по заявке.';
+    dropdown.appendChild(empty);
+  }
+  for (const { item } of matches) {
+    addSuggestion(deviceName(item), () => acceptModel(item));
+  }
+  addSuggestion('Продолжить с введённой моделью', () => acceptModel(), true);
+  dropdown.hidden = false;
+
+  function addSuggestion(label, select, manual = false) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'calc-live-result-item model-suggestion';
+    if (manual) button.classList.add('model-suggestion-manual');
+    button.textContent = label;
+    button.addEventListener('click', select);
     dropdown.appendChild(button);
-  });
-  dropdown.style.display = 'flex';
+  }
 }
 function selectCustomProblem() { $('customProblemCard').classList.add('active'); }
 function handleCustomProblemInput(value) { customProblem = value.trim(); if (customProblem) selectedIssue = ''; renderIssues(); updateResult(); }
-function clearGlobalSearch() { $('calcGlobalSearchInput').value = ''; selectedModel = null; $('calcLiveDropdown').style.display = 'none'; $('calcSearchClearBtn').style.display = 'none'; updateResult(); $('calcGlobalSearchInput').focus(); }
+function clearGlobalSearch() {
+  $('calcGlobalSearchInput').value = '';
+  selectedModel = null;
+  manualModel = false;
+  $('calcLiveDropdown').hidden = true;
+  $('calcSearchClearBtn').style.display = 'none';
+  updateResult();
+  $('calcGlobalSearchInput').focus();
+}
 window.openDirectChat = function(topic) { window.open('https://t.me/good_service161?text=' + encodeURIComponent(message(topic)), '_blank', 'noopener,noreferrer'); };
-document.addEventListener('DOMContentLoaded', async () => {
-  renderIssues(); updateResult();
-  const input = $('calcGlobalSearchInput');
-  input.addEventListener('input', () => { selectedModel = null; $('calcSearchClearBtn').style.display = input.value ? 'flex' : 'none'; renderSuggestions(input.value); updateResult(); });
-  document.addEventListener('click', event => { if (!event.target.closest('.calc-search-engine-wrap')) $('calcLiveDropdown').style.display = 'none'; });
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 20000);
-  try {
-    if (typeof XLSX === 'undefined' || typeof parseSheetPrices !== 'function') throw new Error('Не загружен модуль таблицы');
-    const response = await fetch(SHEET_URL, { cache: 'no-store', signal: controller.signal });
-    if (!response.ok) throw new Error('Таблица недоступна');
-    const data = await response.arrayBuffer();
-    if (!data.byteLength || data.byteLength > 10000000) throw new Error('Некорректный размер таблицы');
-    const result = parseSheetPrices(XLSX.read(data, { type: 'array', cellFormula: false }));
-    models = result.models;
-    prices = result.prices;
-    $('priceUpdated').textContent = 'Цены загружены из Google Таблицы.';
-  } catch (error) {
-    console.warn('Цены из таблицы недоступны:', error);
-    $('priceUpdated').textContent = 'Цены временно недоступны. Уточните у мастера.';
+function setupMaxDialog() {
+  const button = $('btnDirectMaxi');
+  const dialog = $('maxDialog');
+  if (typeof dialog.showModal !== 'function') return;
+
+  const draft = $('maxMessage');
+  const status = $('maxCopyStatus');
+  $('maxChat').href = button.href;
+  button.setAttribute('aria-haspopup', 'dialog');
+  button.addEventListener('click', event => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    draft.value = message();
+    $('maxShare').href = 'https://max.ru/:share?text=' + encodeURIComponent(draft.value);
+    status.textContent = '';
+    dialog.showModal();
+  });
+  $('maxCopy').addEventListener('click', async () => {
     try {
-      const fallback = await fetch('data/models.json');
-      if (fallback.ok) models = await fallback.json();
-    } catch (_) { /* The visitor can still enter a model and contact the master. */ }
-  } finally {
-    clearTimeout(timeout);
-    pricesLoading = false;
-    if (input.value) renderSuggestions(input.value);
+      await navigator.clipboard.writeText(draft.value);
+      status.textContent = 'Текст скопирован. Откройте чат GoodService и вставьте сообщение.';
+    } catch {
+      draft.focus();
+      draft.select();
+      status.textContent = 'Скопируйте выделенный текст, затем вставьте его в чате GoodService.';
+    }
+  });
+}
+
+function startCatalog(input, calculator) {
+  let started = false;
+  const observer = 'IntersectionObserver' in window
+    ? new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) start();
+      }, { rootMargin: '240px 0px' })
+    : null;
+
+  function refresh() {
+    if (!selectedModel && !manualModel && !suggestions.hidden && document.activeElement === input) renderSuggestions(input.value);
     updateResult();
   }
+
+  function mergeModels(incoming, preferred) {
+    const entries = preferred ? [...models, ...incoming] : [...incoming, ...models];
+    const merged = new Map();
+    for (const item of entries) {
+      const key = catalogKey(item);
+      const previous = merged.get(key);
+      const aliases = [previous?.aliases, item.aliases].filter(Boolean).join(', ');
+      merged.set(key, { ...previous, ...item, aliases });
+    }
+    models = [...merged.values()];
+    if (selectedModel) selectedModel = merged.get(catalogKey(selectedModel)) || selectedModel;
+    indexModels(models, deviceName);
+  }
+
+  async function loadLocalModels() {
+    try {
+      const response = await fetch('data/models.json');
+      if (response.ok) mergeModels(await response.json(), false);
+    } catch {
+      // A customer can still enter a model by hand.
+    } finally {
+      catalogLoading = false;
+      refresh();
+    }
+  }
+
+  function start() {
+    if (started) return;
+    started = true;
+    observer?.disconnect();
+    loadLocalModels();
+    loadLivePrices(mergeModels, refresh);
+  }
+
+  calculator.addEventListener('focusin', start, { once: true });
+  if (observer) observer.observe(calculator);
+  else start();
+}
+
+function loadLivePrices(mergeModels, refresh) {
+  let worker;
+  let timeout;
+
+  function finish(result) {
+    clearTimeout(timeout);
+    worker?.terminate();
+    if (result) {
+      mergeModels(result.models, true);
+      priceIndex = new Map(result.prices.map(row => [priceKey(row, row.issue), row]));
+    } else {
+      $('priceUpdated').textContent = 'Цены временно недоступны. Уточните у мастера.';
+    }
+    pricesLoading = false;
+    refresh();
+  }
+
+  try {
+    worker = new Worker('js/price-worker.js');
+    timeout = setTimeout(() => finish(), 15000);
+    worker.onmessage = ({ data }) => finish(data.result);
+    worker.onerror = () => finish();
+  } catch {
+    finish();
+  }
+}
+
+const searchInput = $('calcGlobalSearchInput');
+const suggestions = $('calcLiveDropdown');
+renderIssues();
+updateResult();
+setupMaxDialog();
+startCatalog(searchInput, $('calculator'));
+searchInput.addEventListener('input', () => {
+  selectedModel = null;
+  manualModel = false;
+  $('calcSearchClearBtn').style.display = searchInput.value ? 'flex' : 'none';
+  renderSuggestions(searchInput.value);
+  updateResult();
+});
+searchInput.addEventListener('focus', () => {
+  if (!selectedModel && !manualModel) renderSuggestions(searchInput.value);
+});
+searchInput.addEventListener('keydown', event => {
+  if (event.isComposing) return;
+  if (event.key === 'ArrowDown' && !suggestions.hidden) {
+    event.preventDefault();
+    suggestions.querySelector('button')?.focus();
+  } else if (event.key === 'Enter' && searchInput.value.trim()) {
+    event.preventDefault();
+    if (selectedModel || manualModel) {
+      $('calcIssueTitle').focus({ preventScroll: true });
+      return;
+    }
+    const exact = findModels(searchInput.value).filter(match => match.exact);
+    acceptModel(exact.length === 1 ? exact[0].item : null);
+  }
+});
+suggestions.closest('.calc-search-engine-wrap').addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !suggestions.hidden) {
+    event.preventDefault();
+    searchInput.focus();
+    suggestions.hidden = true;
+  }
+});
+document.addEventListener('click', event => {
+  if (!event.target.closest('.calc-search-engine-wrap')) suggestions.hidden = true;
 });

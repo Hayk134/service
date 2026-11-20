@@ -6,30 +6,15 @@
   <title>GoodService — Премиальный ремонт смартфонов и гаджетов | Ростов-на-Дону</title>
   <meta name="description" content="Сервисный центр GoodService в Ростове-на-Дону, ул. Ерёменко, 97/29: честный ремонт телефонов, ноутбуков и планшетов. Стоимость и срок согласуем до ремонта.">
 
-  <!-- Google Fonts for Typography & Customizer -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Orbitron:wght@600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500..900&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500..900&display=swap"></noscript>
   <link rel="stylesheet" href="css/site-system.css">
 </head>
 <body>
 
-  <!-- Multi-Layer Scroll Background & Studio Lighting -->
-  <div class="scroll-bg-container" id="scrollBgContainer">
-    <!-- Real Workshop Photos with Crossfade & Parallax (Inactive by default, can be enabled in Customizer) -->
-    <div class="bg-photo-layer" id="bgPhotoHero" style="background-image: url('assets/images/facade.webp');" data-section="hero"></div>
-    <div class="bg-photo-layer" id="bgPhotoCalc" style="background-image: url('assets/images/repair.webp');" data-section="calculator"></div>
-    <div class="bg-photo-layer" id="bgPhotoPromos" style="background-image: url('assets/images/master.webp');" data-section="promos"></div>
-    <div class="bg-photo-layer" id="bgPhotoLocation" style="background-image: url('assets/images/interior.webp');" data-section="location"></div>
-    <div class="bg-photo-layer" id="bgPhotoReviews" style="background-image: url('assets/images/facade.webp');" data-section="reviews"></div>
-
-    <!-- Luxury Dark Gradient Tint for readable typography -->
-    <div class="bg-photo-tint"></div>
-
-    <!-- Full-Width Horizontal Studio Light Beam (100vw) -->
-    <div class="ambient-spotlight" id="ambientSpotlight"></div>
-    <div class="ambient-pedestal-line"></div>
+  <div class="scroll-bg-container" aria-hidden="true">
+    <div class="ambient-spotlight"></div>
   </div>
 
   <!-- Main Page Stage Wrapper -->
@@ -82,7 +67,34 @@
   <!-- ==========================================================================
        HERO: BRAND HEADER
        ========================================================================== -->
-  <section class="hero-stage" id="hero"><div class="hero-intro"><div class="hero-copy"><p class="hero-eyebrow">СЕРВИСНЫЙ ЦЕНТР / РОСТОВ-НА-ДОНУ</p><h1>Ремонт техники <span>с понятными условиями</span></h1><p class="hero-description">Телефоны, ноутбуки и гаджеты. Уточним стоимость и срок до начала ремонта.</p><div class="hero-actions"><a class="btn-pill btn-pill-primary" href="#calculator">Узнать стоимость</a><a class="hero-address" href="#location">Ерёменко, 97/29 <span>↗</span></a></div></div><div class="hero-image" aria-label="Мастерская GoodService"><div class="hero-flip-card"><div class="hero-flip-face hero-flip-front"><div class="hero-image-caption">GOOD<span>SERVICE</span><small>Ремонт техники в Левенцовке</small></div></div><div class="hero-flip-face hero-flip-back"><img src="assets/images/logo-emblem.svg" alt="Логотип GoodService"><div>Good<span>Service</span></div></div></div></div></div></section>
+  <section class="hero-stage" id="hero">
+    <div class="hero-intro">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">СЕРВИСНЫЙ ЦЕНТР / РОСТОВ-НА-ДОНУ</p>
+        <h1>Ремонт техники <span>с понятными условиями</span></h1>
+        <p class="hero-description">Телефоны, ноутбуки и гаджеты. Уточним стоимость и срок до начала ремонта.</p>
+        <div class="hero-actions">
+          <a class="btn-pill btn-pill-primary" href="#calculator">Узнать стоимость</a>
+          <a class="hero-address" href="#location">Ерёменко, 97/29 <span>↗</span></a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-flip-card">
+          <div class="hero-flip-face hero-flip-front">
+            <img src="assets/images/repair-before-after-640.webp"
+                 srcset="assets/images/repair-before-after-640.webp 640w, assets/images/repair-before-after-1080.webp 1080w"
+                 sizes="(max-width: 450px) calc(100vw - 32px), (max-width: 820px) 420px, (max-width: 1200px) 43vw, 512px"
+                 width="1080" height="1080" fetchpriority="high"
+                 alt="Экран телефона до и после ремонта в GoodService">
+          </div>
+          <div class="hero-flip-face hero-flip-back" aria-hidden="true">
+            <img src="assets/images/logo-emblem.svg" alt="" width="90" height="90">
+            <div>Good<span>Service</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ==========================================================================
        SECTION 1: 4-STEP CALCULATOR (Тип -> Бренд -> Модель -> Услуга -> Telegram)
@@ -98,26 +110,27 @@
         <!-- Unified Instant Search Engine (Умный поисковик по тексту и регистру) -->
         <div class="calc-search-engine-wrap">
           <div class="calc-search-box">
-            <span class="calc-search-icon"><img src="assets/icons/apple-search.png" alt="" class="apple-emoji-inline"></span>
+            <span class="calc-search-icon"><img src="assets/icons/apple-search.webp" alt="" class="apple-emoji-inline" loading="lazy"></span>
             <input type="text" 
                    id="calcGlobalSearchInput" 
                    class="calc-global-search-input" 
                    value="" 
-                   placeholder="Например, iPhone 13 или Samsung A52" aria-label="Модель устройства" 
+                   placeholder="Например, айфон 13 или Samsung A52" aria-label="Модель устройства"
+                   aria-controls="calcLiveDropdown"
                    autocomplete="off" 
                    spellcheck="false">
             <button type="button" class="calc-search-clear-btn" id="calcSearchClearBtn" onclick="clearGlobalSearch()" title="Очистить поиск" aria-label="Очистить поиск" style="display: none;">✕</button>
           </div>
 
           <!-- Instant Live Suggestions Dropdown (appears dynamically as user types) -->
-          <div class="calc-search-live-dropdown" id="calcLiveDropdown" style="display: none;"></div>
+          <div class="calc-search-live-dropdown" id="calcLiveDropdown" hidden></div>
 
         </div>
 
         <!-- Вид неисправности (Единственный пункт выбора ремонта) -->
         <div class="calc-malfunction-section" id="calcMalfunctionSection">
           <div class="calc-malfunction-header">
-            <h3 class="malfunction-main-title">Выберите неисправность</h3>
+            <h3 class="malfunction-main-title" id="calcIssueTitle" tabindex="-1">Выберите неисправность</h3>
           </div>
 
           <div class="services-picker-grid" id="calcServicesGrid"></div>
@@ -136,7 +149,23 @@
           </div>
         </div>
 
-        <div class="calc-result-box" aria-live="polite"><div class="calc-summary-text"><span class="result-label">ВАШ РАСЧЁТ</span><span class="summary-device-line" id="resDeviceLine">Устройство не указано</span><span class="summary-service-line" id="resServiceLine">Выберите модель и неисправность</span></div><div class="result-price-wrap"><span class="result-price-label">Ориентировочная стоимость работы</span><span class="summary-price-num" id="resPriceNum">Уточните у мастера</span></div><p class="result-note">Указана стоимость работы без детали. Цена запчасти зависит от качества. Итоговую стоимость и срок мастер согласует до ремонта.</p><div class="calc-messenger-actions"><a href="https://t.me/good_service161" target="_blank" rel="noopener noreferrer" class="btn-pill btn-pill-primary messenger-text-btn" id="btnDirectTelegram"><img src="assets/icons/telegram_logo.png" alt=""> Уточнить в Telegram</a><a href="https://max.ru/u/f9LHodD0cOLmx9khVkXjQy_EYaKk7mGxK-8x_1GXfViMjwrmJvpe3ZB1IVQ" target="_blank" rel="noopener noreferrer" class="btn-pill btn-pill-secondary messenger-text-btn" id="btnDirectMaxi"><img src="assets/icons/max_logo.png" alt=""> Написать в MAX</a></div><p class="messenger-hint">Откроется чат. Отправьте сообщение, чтобы мастер ответил. <span id="priceUpdated"></span></p></div>
+        <div class="calc-result-box">
+          <div class="calc-summary-text">
+            <span class="result-label">ВАШ РАСЧЁТ</span>
+            <span class="summary-device-line" id="resDeviceLine">Устройство не указано</span>
+            <span class="summary-service-line" id="resServiceLine">Выберите модель и неисправность</span>
+          </div>
+          <div class="result-price-wrap">
+            <span class="result-price-label">Ориентировочная стоимость работы</span>
+            <span class="summary-price-num" id="resPriceNum" aria-live="polite">Уточните у мастера</span>
+          </div>
+          <p class="result-note">Указана стоимость работы без детали. Цена запчасти зависит от качества. Итоговую стоимость и срок мастер согласует до ремонта.</p>
+          <div class="calc-messenger-actions">
+            <a href="https://t.me/good_service161" target="_blank" rel="noopener noreferrer" class="btn-pill btn-pill-primary messenger-text-btn" id="btnDirectTelegram"><img src="assets/icons/telegram_logo.webp" alt="" loading="lazy"> Уточнить в Telegram</a>
+            <a href="https://max.ru/u/f9LHodD0cOLmx9khVkXjQy_EYaKk7mGxK-8x_1GXfViMjwrmJvpe3ZB1IVQ" target="_blank" rel="noopener noreferrer" class="btn-pill btn-pill-secondary messenger-text-btn" id="btnDirectMaxi"><img src="assets/icons/max_logo.webp" alt="" loading="lazy"> Написать в MAX</a>
+          </div>
+          <p class="messenger-hint" id="priceUpdated" aria-live="polite"></p>
+        </div>
       </div>
     </div>
   </section>
@@ -161,14 +190,14 @@
           <h3 class="location-point-title">GoodService на Ерёменко</h3>
           <div class="location-details-list">
             <div class="loc-item">
-              <img src="assets/icons/apple-pin.png" alt="Адрес" class="loc-apple-emoji" width="26" height="26">
+              <img src="assets/icons/apple-pin.webp" alt="Адрес" class="loc-apple-emoji" width="26" height="26" loading="lazy">
               <div class="loc-item-text">
                 <div class="loc-item-title">г. Ростов-на-Дону, ул. Ерёменко, 97/29</div>
                 <div class="loc-item-subtitle">мкр. Левенцовский (вход рядом с Invitro)</div>
               </div>
             </div>
             <div class="loc-item">
-              <img src="assets/icons/apple-clock.png" alt="График работы" class="loc-apple-emoji" width="26" height="26">
+              <img src="assets/icons/apple-clock.webp" alt="График работы" class="loc-apple-emoji" width="26" height="26" loading="lazy">
               <div class="loc-item-text">
                 <div class="loc-item-title">График работы:</div>
                 <div class="loc-schedule-table">
@@ -367,12 +396,12 @@
               <a href="tel:+79613010222" class="footer-phone-link" title="Позвонить прямо сейчас">+7 (961) 301-02-22</a>
             </div>
             <div class="footer-contact-item">
-              <span class="f-icon"><img src="assets/icons/telegram_logo.png" alt="Telegram" class="messenger-inline-icon"></span>
+              <span class="f-icon"><img src="assets/icons/telegram_logo.webp" alt="Telegram" class="messenger-inline-icon" loading="lazy"></span>
               <a href="https://t.me/good_service161" target="_blank" rel="noopener noreferrer" class="footer-link-accent">Telegram: @good_service161</a>
             </div>
             <div class="footer-contact-item">
-              <span class="f-icon"><img src="assets/icons/max_logo.png" alt="Maxi" class="messenger-inline-icon"></span>
-              <a href="https://max.ru/u/f9LHodD0cOLmx9khVkXjQy_EYaKk7mGxK-8x_1GXfViMjwrmJvpe3ZB1IVQ" target="_blank" rel="noopener noreferrer" class="footer-link-accent">Maxi: Чат GoodService</a>
+              <span class="f-icon"><img src="assets/icons/max_logo.webp" alt="MAX" class="messenger-inline-icon" loading="lazy"></span>
+              <a href="https://max.ru/u/f9LHodD0cOLmx9khVkXjQy_EYaKk7mGxK-8x_1GXfViMjwrmJvpe3ZB1IVQ" target="_blank" rel="noopener noreferrer" class="footer-link-accent">MAX: Чат GoodService</a>
             </div>
           </div>
           <div class="footer-action-row">
@@ -394,12 +423,24 @@
   </div> <!-- /.site-page-wrapper -->
 
   <div class="mobile-contact-bar"><a href="tel:+79613010222" class="mobile-call">Позвонить</a><a href="#calculator" class="mobile-estimate">Узнать стоимость</a></div>
-  <script src="js/xlsx.mini.min.js"></script>
-  <script src="js/sheet-prices.js"></script>
-  <script src="js/calculator-tg.js"></script>
-  <script src="js/scroll-background.js"></script>
-  <script src="js/hero-flip.js"></script>
-  <script src="js/scroll-reveal.js"></script>
+  <dialog class="max-dialog" id="maxDialog" aria-labelledby="maxDialogTitle">
+    <form method="dialog" class="max-dialog-header">
+      <h2 id="maxDialogTitle">Заявка в MAX</h2>
+      <button type="submit" class="max-dialog-close" aria-label="Закрыть" autofocus>×</button>
+    </form>
+    <p>Откройте MAX с готовым текстом и выберите чат GoodService.</p>
+    <textarea id="maxMessage" aria-label="Текст заявки" readonly rows="5"></textarea>
+    <a class="btn-pill btn-pill-primary" id="maxShare" target="_blank" rel="noopener noreferrer">Открыть MAX с текстом</a>
+    <div class="max-dialog-alternatives">
+      <button class="btn-pill btn-pill-secondary" type="button" id="maxCopy">Скопировать текст</button>
+      <a class="btn-pill btn-pill-secondary" id="maxChat" target="_blank" rel="noopener noreferrer">Открыть чат GoodService</a>
+    </div>
+    <p id="maxCopyStatus" role="status"></p>
+  </dialog>
+  <script src="js/model-search.js" defer></script>
+  <script src="js/calculator-tg.js" defer></script>
+  <script src="js/hero-flip.js" defer></script>
+  <script src="js/scroll-reveal.js" defer></script>
   <script>
     // Enable touch & mouse drag swiping for Promos and Reviews
     (function initSwipeableGrids() {
