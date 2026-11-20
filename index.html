@@ -170,6 +170,16 @@
     </div>
   </section>
 
+  <section class="offers-section" id="offers" aria-labelledby="offersTitle" hidden>
+    <div class="container">
+      <div class="offers-heading">
+        <p class="section-kicker">ДЛЯ КЛИЕНТОВ GOODSERVICE</p>
+        <h2 class="section-title-large" id="offersTitle">Акции</h2>
+      </div>
+      <div class="offers-grid" id="offersGrid"></div>
+    </div>
+  </section>
+
   <!-- ==========================================================================
        SECTION 2: PROMOTIONS & DISCOUNTS (Скидки и Акции)
        ========================================================================== -->
@@ -437,8 +447,22 @@
     </div>
     <p id="maxCopyStatus" role="status"></p>
   </dialog>
+  <dialog class="max-dialog offer-dialog" id="offerDialog" aria-labelledby="offerDialogTitle">
+    <form method="dialog" class="max-dialog-header">
+      <h2 id="offerDialogTitle">Уточнить условия акции</h2>
+      <button type="submit" class="max-dialog-close" aria-label="Закрыть" autofocus>×</button>
+    </form>
+    <p id="offerDialogName"></p>
+    <p>Выберите мессенджер, чтобы написать мастеру.</p>
+    <div class="offer-dialog-actions">
+      <a class="btn-pill btn-pill-primary" id="offerTelegram" href="https://t.me/good_service161" target="_blank" rel="noopener noreferrer">Telegram</a>
+      <a class="btn-pill btn-pill-secondary" id="offerMax" href="https://max.ru/:share" target="_blank" rel="noopener noreferrer">MAX</a>
+    </div>
+    <p>В MAX выберите чат GoodService для отправки.</p>
+  </dialog>
   <script src="js/model-search.js" defer></script>
   <script src="js/calculator-tg.js" defer></script>
+  <script src="js/offers.js" defer></script>
   <script src="js/hero-flip.js" defer></script>
   <script src="js/scroll-reveal.js" defer></script>
   <script>
