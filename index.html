@@ -149,6 +149,10 @@
           </div>
         </div>
 
+        <div class="selected-offer" id="selectedOffer" hidden>
+          <div><span class="selected-offer-label">ВЫБРАННАЯ АКЦИЯ</span><strong id="selectedOfferName"></strong></div>
+          <button type="button" id="clearSelectedOffer">Убрать</button>
+        </div>
         <div class="calc-result-box">
           <div class="calc-summary-text">
             <span class="result-label">ВАШ РАСЧЁТ</span>
@@ -433,32 +437,31 @@
   </div> <!-- /.site-page-wrapper -->
 
   <div class="mobile-contact-bar"><a href="tel:+79613010222" class="mobile-call">Позвонить</a><a href="#calculator" class="mobile-estimate">Узнать стоимость</a></div>
+  <dialog class="max-dialog" id="telegramDialog" aria-labelledby="telegramDialogTitle">
+    <form method="dialog" class="max-dialog-header">
+      <h2 id="telegramDialogTitle">Заявка в Telegram</h2>
+      <button type="submit" class="max-dialog-close" aria-label="Закрыть" autofocus>×</button>
+    </form>
+    <p>Откройте чат. Если текст не появился, скопируйте и вставьте его.</p>
+    <textarea id="telegramMessage" aria-label="Текст заявки" readonly rows="5"></textarea>
+    <div class="max-dialog-alternatives">
+      <button class="btn-pill btn-pill-secondary" type="button" id="telegramCopy">Скопировать текст</button>
+      <a class="btn-pill btn-pill-primary" id="telegramChat" target="_blank" rel="noopener noreferrer">Открыть чат</a>
+    </div>
+    <p id="telegramCopyStatus" role="status"></p>
+  </dialog>
   <dialog class="max-dialog" id="maxDialog" aria-labelledby="maxDialogTitle">
     <form method="dialog" class="max-dialog-header">
       <h2 id="maxDialogTitle">Заявка в MAX</h2>
       <button type="submit" class="max-dialog-close" aria-label="Закрыть" autofocus>×</button>
     </form>
-    <p>Откройте MAX с готовым текстом и выберите чат GoodService.</p>
+    <p>Скопируйте текст, откройте чат и вставьте сообщение.</p>
     <textarea id="maxMessage" aria-label="Текст заявки" readonly rows="5"></textarea>
-    <a class="btn-pill btn-pill-primary" id="maxShare" target="_blank" rel="noopener noreferrer">Открыть MAX с текстом</a>
     <div class="max-dialog-alternatives">
       <button class="btn-pill btn-pill-secondary" type="button" id="maxCopy">Скопировать текст</button>
-      <a class="btn-pill btn-pill-secondary" id="maxChat" target="_blank" rel="noopener noreferrer">Открыть чат GoodService</a>
+      <a class="btn-pill btn-pill-primary" id="maxChat" target="_blank" rel="noopener noreferrer">Открыть чат</a>
     </div>
     <p id="maxCopyStatus" role="status"></p>
-  </dialog>
-  <dialog class="max-dialog offer-dialog" id="offerDialog" aria-labelledby="offerDialogTitle">
-    <form method="dialog" class="max-dialog-header">
-      <h2 id="offerDialogTitle">Уточнить условия акции</h2>
-      <button type="submit" class="max-dialog-close" aria-label="Закрыть" autofocus>×</button>
-    </form>
-    <p id="offerDialogName"></p>
-    <p>Выберите мессенджер, чтобы написать мастеру.</p>
-    <div class="offer-dialog-actions">
-      <a class="btn-pill btn-pill-primary" id="offerTelegram" href="https://t.me/good_service161" target="_blank" rel="noopener noreferrer">Telegram</a>
-      <a class="btn-pill btn-pill-secondary" id="offerMax" href="https://max.ru/:share" target="_blank" rel="noopener noreferrer">MAX</a>
-    </div>
-    <p>В MAX выберите чат GoodService для отправки.</p>
   </dialog>
   <script src="js/model-search.js" defer></script>
   <script src="js/calculator-tg.js" defer></script>

@@ -1,6 +1,7 @@
 const issues = ['Разбит экран', 'Быстро разряжается', 'Не заряжается', 'Не включается', 'Проблема со звуком', 'Попадание влаги'];
 let models = [], selectedModel = null, selectedIssue = '', customProblem = '';
 let manualModel = false;
+let selectedOffer = '';
 let priceIndex = new Map();
 let catalogLoading = true;
 let pricesLoading = true;
@@ -36,6 +37,7 @@ function message(topic) {
   else if ($('calcGlobalSearchInput').value.trim()) parts.push('Устройство: ' + $('calcGlobalSearchInput').value.trim());
   if (customProblem) parts.push('Проблема: ' + customProblem);
   else if (selectedIssue) parts.push('Проблема: ' + selectedIssue);
+  if (selectedOffer) parts.push('Выбранная акция: ' + selectedOffer);
   const price = getPriceRecord();
   if (price) parts.push('Ориентировочная стоимость работы: ' + (price.from ? 'от ' : '≈ ') + Number(price.price).toLocaleString('ru-RU') + ' ₽');
   return parts.join('\n');
@@ -49,6 +51,12 @@ function updateResult() {
   const text = encodeURIComponent(message());
   $('btnDirectTelegram').href = 'https://t.me/good_service161?text=' + text;
 }
+window.setSelectedOffer = function(title) {
+  selectedOffer = title || '';
+  $('selectedOffer').hidden = !selectedOffer;
+  $('selectedOfferName').textContent = selectedOffer;
+  updateResult();
+};
 function acceptModel(item = null) {
   selectedModel = item;
   manualModel = !item;
@@ -100,24 +108,26 @@ function clearGlobalSearch() {
   $('calcGlobalSearchInput').focus();
 }
 window.openDirectChat = function(topic) { window.open('https://t.me/good_service161?text=' + encodeURIComponent(message(topic)), '_blank', 'noopener,noreferrer'); };
-function setupMaxDialog() {
-  const button = $('btnDirectMaxi');
-  const dialog = $('maxDialog');
+function setupMessengerDialog(service) {
+  const isMax = service === 'max';
+  const button = $(isMax ? 'btnDirectMaxi' : 'btnDirectTelegram');
+  const dialog = $(service + 'Dialog');
   if (typeof dialog.showModal !== 'function') return;
 
-  const draft = $('maxMessage');
-  const status = $('maxCopyStatus');
-  $('maxChat').href = button.href;
+  const draft = $(service + 'Message');
+  const status = $(service + 'CopyStatus');
+  const chat = $(service + 'Chat');
+  if (isMax) chat.href = button.href;
   button.setAttribute('aria-haspopup', 'dialog');
   button.addEventListener('click', event => {
     if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     draft.value = message();
-    $('maxShare').href = 'https://max.ru/:share?text=' + encodeURIComponent(draft.value);
+    if (!isMax) chat.href = 'https://t.me/good_service161?text=' + encodeURIComponent(draft.value);
     status.textContent = '';
     dialog.showModal();
   });
-  $('maxCopy').addEventListener('click', async () => {
+  $(service + 'Copy').addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(draft.value);
       status.textContent = 'Текст скопирован. Откройте чат GoodService и вставьте сообщение.';
@@ -212,7 +222,9 @@ const searchInput = $('calcGlobalSearchInput');
 const suggestions = $('calcLiveDropdown');
 renderIssues();
 updateResult();
-setupMaxDialog();
+setupMessengerDialog('max');
+setupMessengerDialog('telegram');
+$('clearSelectedOffer').addEventListener('click', () => window.setSelectedOffer(''));
 startCatalog(searchInput, $('calculator'));
 searchInput.addEventListener('input', () => {
   selectedModel = null;

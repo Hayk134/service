@@ -1,7 +1,6 @@
 (() => {
   const section = document.getElementById('offers');
   const grid = document.getElementById('offersGrid');
-  const dialog = document.getElementById('offerDialog');
   const calculator = document.getElementById('calculator');
   const rostovDate = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Europe/Moscow', year: 'numeric', month: '2-digit', day: '2-digit'
@@ -10,6 +9,8 @@
   let worker = null;
   let lastAttempt = 0;
   let timeout;
+  let selectedTitle = '';
+  document.getElementById('clearSelectedOffer').addEventListener('click', () => { selectedTitle = ''; });
 
   function isoDate(value) {
     if (typeof value === 'number' && Number.isFinite(value) && value >= 1 && value <= 2958465) {
@@ -25,27 +26,21 @@
     return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === result ? result : null;
   }
 
-  function showOfferDialog(title) {
-    const message = 'Здравствуйте! Хочу уточнить условия акции «' + title + '».';
-    const encoded = encodeURIComponent(message);
-    document.getElementById('offerDialogName').textContent = title;
-    document.getElementById('offerTelegram').href = 'https://t.me/good_service161?text=' + encoded;
-    document.getElementById('offerMax').href = 'https://max.ru/:share?text=' + encoded;
-    if (typeof dialog.showModal === 'function') dialog.showModal();
-    else window.open('https://t.me/good_service161?text=' + encoded, '_blank', 'noopener,noreferrer');
-  }
-
   function render() {
     const today = rostovDate.format(new Date());
     const active = [];
     for (const row of rows) {
-      const [enabled, title, description, label, end] = row;
+      const [enabled, title, description, , end] = row;
       const clean = value => typeof value === 'string' ? value.trim() : '';
       if (clean(enabled).toLowerCase() !== 'да' || !clean(title) || !clean(description)) continue;
       const endDate = end === null || end === undefined || end === '' ? '' : isoDate(end);
       if (endDate === null || (endDate && endDate < today)) continue;
-      active.push({ title: clean(title), description: clean(description), label: clean(label) || 'Уточнить условия', endDate });
+      active.push({ title: clean(title), description: clean(description), endDate });
       if (active.length === 3) break;
+    }
+    if (selectedTitle && !active.some(offer => offer.title === selectedTitle)) {
+      selectedTitle = '';
+      window.setSelectedOffer('');
     }
     grid.replaceChildren();
     for (const offer of active) {
@@ -61,8 +56,12 @@
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'btn-pill btn-pill-primary offer-button';
-      button.textContent = offer.label;
-      button.addEventListener('click', () => showOfferDialog(offer.title));
+      button.textContent = 'На ремонт';
+      button.addEventListener('click', () => {
+        selectedTitle = offer.title;
+        window.setSelectedOffer(offer.title);
+        calculator.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
       card.append(label, title, description, button);
       grid.appendChild(card);
     }
